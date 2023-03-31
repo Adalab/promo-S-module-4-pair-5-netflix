@@ -109,3 +109,38 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2023-03-28 11:14:55
+
+USE Netflix;
+
+CREATE TABLE rel_movies_users (
+idRelMU INT primary key auto_increment,
+fkUsers INT,
+fkMovies INT,
+FOREIGN KEY (fkUsers) REFERENCES users (idUsers),
+FOREIGN KEY (fkMovies) REFERENCES movies (id)
+);
+
+INSERT INTO rel_movies_users (fkUsers, fkMovies) VALUES 
+(1,1),
+(1,2),
+(2,2);
+
+SELECT * FROM rel_movies_users;
+
+CREATE TABLE rel_movies_actors (
+idRelMA INT primary key auto_increment,
+fkMovies INT,
+fkActors INT,
+FOREIGN KEY (fkMovies) REFERENCES movies(id),
+FOREIGN KEY (fkActors) REFERENCES actors(idActor));
+
+SELECT * FROM rel_movies_actors;
+
+INSERT INTO rel_movies_actors (fkMovies, fkActors) VALUES
+(3,1),
+(2,2),
+(1,3);
+
+SELECT actors.name, movies.title, actors.idActor, movies.id
+FROM actors INNER JOIN rel_movies_actors ON actors.idActor = rel_movies_actors.fkActors
+INNER JOIN movies ON movies.id = rel_movies_actors.fkMovies;
