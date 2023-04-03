@@ -22,7 +22,7 @@ mysql
     host: "localhost",
     database: "netflix",
     user: "root",
-    password: "PatuSQL2393!",
+    password: "pascuallaura95@",
   })
   .then((con) => {
     connection = con;
@@ -41,6 +41,19 @@ mysql
 
  server.get("/movies", (req, res) => {
    console.log("Pidiendo a la base de datos información de las pelis.");
+   console.log(req.query);
+   const genreFilterParam = req.query.genre;
+   if(genreFilterParam !== '') {
+    connection
+    .query("SELECT * FROM movies WHERE gender = ?", [genreFilterParam])
+    .then(([results, fields]) => {
+          res.json({ success: true, movies: results });
+      })
+      .catch((err) => {
+        throw err;
+      });
+   }
+   else {
    connection
      .query("SELECT * FROM movies")
      .then(([results, fields]) => {
@@ -54,4 +67,8 @@ mysql
      .catch((err) => {
        throw err;
      });
+   }  
  });
+
+
+ 
