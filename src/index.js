@@ -43,9 +43,11 @@ mysql
    console.log("Pidiendo a la base de datos información de las pelis.");
    console.log(req.query);
    const genreFilterParam = req.query.genre;
+   const sortFilterParam = req.query.sort || "asc" ;
+   console.log(sortFilterParam)
    if(genreFilterParam !== '') {
     connection
-    .query("SELECT * FROM movies WHERE gender = ?", [genreFilterParam])
+    .query(`SELECT * FROM movies WHERE gender = ? ORDER BY title ${sortFilterParam}`, [genreFilterParam])
     .then(([results, fields]) => {
           res.json({ success: true, movies: results });
       })
@@ -55,7 +57,7 @@ mysql
    }
    else {
    connection
-     .query("SELECT * FROM movies")
+     .query(`SELECT * FROM movies ORDER BY title ${sortFilterParam}`)
      .then(([results, fields]) => {
        console.log("Información recuperada:");
        results.forEach((result) => {
