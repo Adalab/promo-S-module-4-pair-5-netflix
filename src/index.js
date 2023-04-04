@@ -41,7 +41,6 @@ mysql
 
  server.get("/movies", (req, res) => {
    console.log("Pidiendo a la base de datos información de las pelis.");
-   console.log(req.query);
    const genreFilterParam = req.query.genre;
    const sortFilterParam = req.query.sort || "asc" ;
    console.log(sortFilterParam)
@@ -59,7 +58,6 @@ mysql
    connection
      .query(`SELECT * FROM movies ORDER BY title ${sortFilterParam}`)
      .then(([results, fields]) => {
-       console.log("Información recuperada:");
        results.forEach((result) => {
          console.log(result);
        });
@@ -72,5 +70,35 @@ mysql
    }  
  });
 
+server.post("/login", (req, res) => {
 
+  const {email, password} = req.body;
+  if(!email || !password) {
+       res.json({ success: false, errorMessage: "Usuaria/o no encontrada/o" });
+     }
+
+  else {
+    connection
+     .query("SELECT * FROM users WHERE email = ? AND password = ? ", [email, password])
+     .then(([results, fields]) => {
+       if (results.length > 0) {
+          console.log("Información recuperada:");
+          results.forEach((result) => {
+            console.log(result);
+          });
+
+          res.json({ success: true, userId: results[0].idUsers });
+        } else {
+          res.json({ success: false, errorMessage: "Usuaria/o no encontrada/o" });
+        }
+        })
+     .catch((err) => {
+       throw err;
+     });
+    }
+    }
+)
+
+const staticServerPathWeb = './src/public-react';
+server.use( express.static(staticServerPathWeb));
  
