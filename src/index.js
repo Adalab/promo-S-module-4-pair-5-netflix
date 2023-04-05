@@ -102,3 +102,5 @@ server.post("/login", (req, res) => {
 const staticServerPathWeb = './src/public-react';
 server.use( express.static(staticServerPathWeb));
  
+const staticImagesPathWeb = './src/public-movies-images';
+server.use( express.static(staticImagesPathWeb));
