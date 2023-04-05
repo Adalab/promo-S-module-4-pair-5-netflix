@@ -45,7 +45,7 @@ Por favor marca a continuación los ejercicios que hayáis terminado:
 **4.7 Express JS III:**
 
 - [x] 1. Servidor de estáticos para React
-- [ ] 2. Servidor de estáticos para las fotos
+- [x] 2. Servidor de estáticos para las fotos
 - [ ] 3. Crea un motor de plantillas
 
   - [ ] 1. Obtener el id de la película a renderizar
@@ -56,8 +56,8 @@ Por favor marca a continuación los ejercicios que hayáis terminado:
 
 **4.8 Mongo I:**
 
-- [ ] 1. Configura MongoDB Atlas
-- [ ] 2. Crea la bases de datos Netflix
+- [x] 1. Configura MongoDB Atlas
+- [x] 2. Crea la bases de datos Netflix
 
 **4.9 Mongo II:**
 
