@@ -5,7 +5,7 @@ const cors = require('cors');
 const server = express();
 server.use(cors());
 server.use(express.json());
-
+server.set('view engine', 'ejs');
 // init express aplication
 const serverPort = 4000;
 server.listen(serverPort, () => {
@@ -99,8 +99,30 @@ server.post("/login", (req, res) => {
     }
 )
 
+server.get('/movie/:movieId', (req, res) => { 
+  const foundMovie = req.params.movieId;
+  const sql = "SELECT  * FROM movies WHERE id = ?"
+
+ connection
+ .query(sql, [foundMovie ])
+ .then(([results, fields]) => {
+    const movie = results[0]; 
+    res.render("movie", movie);
+ })
+
+.catch((err) => {
+throw err;
+});
+
+ });
+
+
+
 const staticServerPathWeb = './src/public-react';
 server.use( express.static(staticServerPathWeb));
  
 const staticImagesPathWeb = './src/public-movies-images';
 server.use( express.static(staticImagesPathWeb));
+
+const staticCssPathWeb = './src/public-movies-css';
+server.use( express.static(staticCssPathWeb));
