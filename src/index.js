@@ -12,12 +12,15 @@ server.listen(serverPort, () => {
   console.log(`Server listening at http://localhost:${serverPort}`);
 });
 
+const dbConnect = require('../config/connection');
+dbConnect();
+
 // mySQL conection
 const mysql = require("mysql2/promise");
 
 let connection;
 
-mysql
+/* mysql
   .createConnection({
     host: "localhost",
     database: "netflix",
@@ -37,7 +40,7 @@ mysql
   })
   .catch((err) => {
     console.error("Error de configuración: " + err.stack);
-  });
+  }); */
 
  server.get("/movies", (req, res) => {
    console.log("Pidiendo a la base de datos información de las pelis.");
@@ -115,6 +118,24 @@ throw err;
 });
 
  });
+
+
+ const Movie = require('../models/movies');
+ server.get('/movies_all_mongo', (req, res) => {
+  const genreFilterParam = req.query.genre;
+  if(genreFilterParam !== '' && genreFilterParam !== 'Todas') {
+    if(genreFilterParam === 'Todas') {
+    query = Movie.find();
+  } else if(genreFilterParam !== ''){
+    query = Movie.find({genre:{$eq: genreFilterParam}});
+  }
+   query.then((document) => {
+      res.json({
+        success: true,
+        movies:  document
+      });
+    })}
+})
 
 
 
