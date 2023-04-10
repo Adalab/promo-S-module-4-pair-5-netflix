@@ -120,22 +120,25 @@ throw err;
  });
 
 
- const Movie = require('../models/movies');
- server.get('/movies_all_mongo', (req, res) => {
-  const genreFilterParam = req.query.genre;
-  if(genreFilterParam !== '' && genreFilterParam !== 'Todas') {
-    if(genreFilterParam === 'Todas') {
-    query = Movie.find();
+const Movie = require('../models/movies');
+server.get('/movies_all_mongo', (req, res) => {
+const genreFilterParam = req.query.genre;
+const sortFilterParam = req.query.sort ;
+
+  if(genreFilterParam === 'Todas') {
+    query = Movie.find().sort({title: sortFilterParam})
+;
   } else if(genreFilterParam !== ''){
-    query = Movie.find({genre:{$eq: genreFilterParam}});
+    query = Movie.find({genre:{$eq: genreFilterParam}}).sort({title: sortFilterParam})
+;
   }
-   query.then((document) => {
-      res.json({
-        success: true,
-        movies:  document
-      });
-    })}
-})
+  query.then((document) => {
+    res.json({
+      success: true,
+      movies:  document
+    });
+  })}
+)
 
 
 
