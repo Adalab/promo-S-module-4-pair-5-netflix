@@ -25,7 +25,7 @@ let connection;
     host: "localhost",
     database: "netflix",
     user: "root",
-    password: "pascuallaura95@",
+    password: "",
   })
   .then((con) => {
     connection = con;
