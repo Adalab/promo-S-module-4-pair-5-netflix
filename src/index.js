@@ -157,15 +157,16 @@ console.log("PROBANDO");
   let idMovie = "642d37e3584c5f2a97494f33";
   let idUser = "642d38f811083cc1d20975e8";
   const favorite = new Favorite({
-    idUser: idMovie,
-    idMovie: idUser,
+    idUser: idUser,
+    idMovie: idMovie,
     score: req.body.score,
   });
   favorite.save().then((response) => res.json(response));
 });
 
-server.get('/favorites-list', (req, res) => {
-  query = Favorite.find().populate({path: "users", select:"name"})
+server.get('/favorites-list/:idUser', (req, res) => {
+  console.log(req.params.idUser)
+  query = Favorite.find({idUser: req.params.idUser}).populate({path: "idMovie", select:"title"})
   .then((response) => res.json(response))
   .catch((error) => console.log(error));
 });
