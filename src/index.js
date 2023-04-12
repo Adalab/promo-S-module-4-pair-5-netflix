@@ -20,12 +20,12 @@ const mysql = require("mysql2/promise");
 
 let connection;
 
-/* mysql
+mysql
   .createConnection({
     host: "localhost",
     database: "netflix",
     user: "root",
-    password: "",
+    password: "pascuallaura95@",
   })
   .then((con) => {
     connection = con;
@@ -40,7 +40,7 @@ let connection;
   })
   .catch((err) => {
     console.error("Error de configuración: " + err.stack);
-  }); */
+  }); 
 
 server.get("/movies", (req, res) => {
   console.log("Pidiendo a la base de datos información de las pelis.");
